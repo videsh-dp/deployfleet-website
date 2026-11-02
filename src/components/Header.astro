@@ -1,0 +1,53 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { NAV, appLinks } from '../data/site';
+import { SERVICES } from '../data/services';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const serviceLinks = [{ label: 'All Services', href: '/services/' }, ...SERVICES.map((s) => ({ label: s.title, href: `/services/${s.slug}/` }))];
+---
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <Logo />
+    <nav class="nav" id="site-nav" aria-label="Main" data-nav>
+      <ul>
+        {NAV.map((item) => {
+          const children = item.children === 'services' ? serviceLinks : item.children;
+          return children ? (
+            <li class="has-dropdown" data-dropdown>
+              <button class="nav-link" type="button" aria-expanded="false" aria-current={isActive(item.href) ? 'page' : undefined}>
+                {item.label}
+                <Icon name="caret" class="caret" />
+              </button>
+              <ul class="dropdown">
+                {children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+              </ul>
+            </li>
+          ) : (
+            <li><a class="nav-link" href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+          );
+        })}
+      </ul>
+      <div class="nav-mobile-ctas">
+        <a class="btn btn--primary btn--block" href={appLinks.register}>Post a Job <Icon name="arrow" /></a>
+        <a class="btn btn--ghost btn--block" href={appLinks.login}>Log In</a>
+      </div>
+    </nav>
+    <div class="header-actions">
+      <a class="header-login" href={appLinks.login}>Log In</a>
+      <a class="btn btn--primary" href={appLinks.register}>Get Services</a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu" data-menu-toggle>
+        <Icon name="menu" class="icon-open" />
+        <Icon name="close" class="icon-close" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<style is:global>
+  .menu-toggle .icon-close { display: none; }
+  .menu-toggle[aria-expanded='true'] .icon-close { display: block; }
+  .menu-toggle[aria-expanded='true'] .icon-open { display: none; }
+</style>

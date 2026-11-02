@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import BadgeRing from '../components/BadgeRing.astro';
+import Features from '../components/Features.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { appLinks } from '../data/site';
+
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'About Us', path: '/about/' }];
+const categories = ['POS installs and break-fix', 'Networking and Wi-Fi troubleshooting', 'Structured cabling', 'CCTV and NVR/DVR service', 'Access control', 'Alarm systems', 'Kiosks and digital signage', 'On-site device swaps and rollouts'];
+const pillars = [
+  { icon: 'bolt', title: 'Built for real dispatch', text: 'Clear job scopes, smart matching by skill and location, and visibility into technician availability, including after-hours and weekends.' },
+  { icon: 'clipboard', title: 'Proof you can trust', text: 'Consistent closeout documentation like photos, notes, and checklists so every job is easier to manage and easier to trust.' },
+  { icon: 'users', title: 'Fair to technicians', text: 'Straightforward job expectations, a reputation built through reviews, and workflows that help techs deliver quality work without confusion.' },
+];
+---
+<Base
+  title="About DeployFleet | Verified Field Technicians, On Demand"
+  description="DeployFleet was built so that when a site goes down, finding the right technician doesn’t feel like a scramble. Learn how we connect businesses with verified field techs."
+  breadcrumbs={crumbs}
+>
+  <PageHero
+    eyebrow="About us"
+    title="Speed with accountability for field service"
+    text="DeployFleet was built to solve a simple but expensive problem: when a site goes down, finding the right technician quickly shouldn’t feel like a scramble."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container split">
+      <div class="split-media reveal">
+        <img src="/img/tech-handshake.jpg" alt="Technician with a toolbox greeting a business owner on site" width="640" height="832" loading="lazy" decoding="async" />
+        <BadgeRing />
+      </div>
+      <div class="prose reveal">
+        <span class="eyebrow"><Icon name="tools" />Our story</span>
+        <h2>Connecting businesses with skilled, verified technicians</h2>
+        <p>We connect businesses and service providers with skilled, verified field technicians for on-demand and scheduled work across IT and low-voltage service categories:</p>
+        <ul class="check-list" style="border:0;padding:4px 0 22px;grid-template-columns:1fr 1fr;column-gap:20px">
+          {categories.map((c) => <li><Icon name="check" />{c}</li>)}
+        </ul>
+        <p>Our platform is designed around real-world dispatch needs: clear job scopes, smart matching by skill and location, visibility into technician availability (including after-hours and weekends), and consistent closeout documentation like photos, notes, and checklists, so every job is easier to manage and easier to trust.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow"><Icon name="tools" />What we stand for</span>
+        <h2>Designed for both sides of the job</h2>
+      </div>
+      <div class="pillars">
+        {pillars.map((p) => (
+          <div class="pillar reveal">
+            <div class="feature-icon"><Icon name={p.icon} /></div>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose" style="margin:0 auto;text-align:center">
+      <span class="eyebrow"><Icon name="tools" />Our mission</span>
+      <h2>One well-executed job at a time</h2>
+      <p class="lead">At the end of the day, DeployFleet is about speed with accountability: helping companies keep locations running smoothly while giving technicians a reliable way to grow their business, one well-executed job at a time.</p>
+      <div class="hero-ctas" style="justify-content:center;margin-top:28px">
+        <a class="btn btn--primary" href={appLinks.register}>Post a Job <Icon name="arrow" /></a>
+        <a class="btn btn--ghost" href="/how-it-works/">How it works <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <Features />
+  <CtaBand />
+</Base>

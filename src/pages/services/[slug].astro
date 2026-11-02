@@ -1,0 +1,102 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { SITE, appLinks } from '../../data/site';
+import { SERVICES, type Service } from '../../data/services';
+
+export function getStaticPaths() {
+  return SERVICES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+const { service: s } = Astro.props as { service: Service };
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }, { name: s.title, path: `/services/${s.slug}/` }];
+const related = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 3);
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: s.title,
+    serviceType: s.title,
+    description: s.metaDescription,
+    url: `${SITE.url}/services/${s.slug}/`,
+    provider: { '@id': `${SITE.url}/#organization` },
+    areaServed: { '@type': 'Country', name: 'United States' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: s.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Base title={s.metaTitle} description={s.metaDescription} breadcrumbs={crumbs} schema={schema}>
+  <PageHero eyebrow="Service" title={s.title} text={s.short} crumbs={crumbs}>
+    <div class="hero-ctas" style="margin-top:28px">
+      <a class="btn btn--primary" href={appLinks.register}>Post a Job <Icon name="arrow" /></a>
+      <a class="btn btn--outline" href="/contact/">Talk to us</a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container detail-grid">
+      <div>
+        <p class="lead" style="font-size:1.12rem">{s.intro}</p>
+        <h2 style="margin-top:40px">What technicians can handle</h2>
+        <ul class="task-list">
+          {s.tasks.map((t) => <li><Icon name="check" />{t}</li>)}
+        </ul>
+
+        <h2 style="margin-top:56px">How it works</h2>
+        <ol class="flow" style="margin-top:24px">
+          {[
+            ['Post the job', 'Add the location, scope, urgency (ASAP or scheduled), required skills, and any photos, access procedures or site contacts.'],
+            ['Match & dispatch', `We match you with technicians skilled in ${s.title} by skill tags, distance, ratings and availability, or invite your Favorite Tech Pool first.`],
+            ['Track, close out, pay', 'Follow status updates from en route to completed, review the structured closeout, then approve and pay.'],
+          ].map(([t, d], i) => (
+            <li class="flow-item">
+              <span class="step-num" aria-hidden="true">0{i + 1}</span>
+              <div class="flow-body"><h3>{t}</h3><p>{d}</p></div>
+            </li>
+          ))}
+        </ol>
+
+        <h2 style="margin-top:56px">Frequently asked questions</h2>
+        <div class="faq">
+          {s.faqs.map((f, i) => (
+            <details open={i === 0}>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+      <aside class="aside-card">
+        <h2>What’s in the closeout</h2>
+        <ul>
+          {s.closeout.map((c) => <li><Icon name="check" />{c}</li>)}
+        </ul>
+        <a class="btn btn--primary btn--block" href={appLinks.register}>Post a {s.title} job</a>
+        <p style="margin:16px 0 0;font-size:.85rem">Urgent? Technicians set after-hours and weekend availability so you can dispatch now.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--soft related">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow"><Icon name="tools" />More services</span>
+          <h2>Related services</h2>
+        </div>
+        <p><a class="link-more" href="/services/">View all services <Icon name="arrow-right" /></a></p>
+      </div>
+      <div class="card-grid">
+        {related.map((r) => <ServiceCard service={r} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

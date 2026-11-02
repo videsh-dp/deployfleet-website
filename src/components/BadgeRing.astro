@@ -1,0 +1,13 @@
+---
+interface Props { text?: string; class?: string }
+const { text = 'Verified Techs • DeployFleet • ', class: cls = '' } = Astro.props;
+const id = `ring-${Math.random().toString(36).slice(2, 8)}`;
+import Icon from './Icon.astro';
+---
+<div class={`badge-ring ${cls}`} aria-hidden="true">
+  <svg class="ring-text" viewBox="0 0 100 100">
+    <defs><path id={id} d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" /></defs>
+    <text><textPath href={`#${id}`} textLength="236" lengthAdjust="spacing">{text}</textPath></text>
+  </svg>
+  <Icon name="tools" class="ring-icon" />
+</div>

@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { SITE, HELPS } from '../../data/site';
+import { SERVICES } from '../../data/services';
+
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Services', path: '/services/' }];
+---
+<Base
+  title="What We Cover | IT & Low-Voltage Field Services"
+  description="CCTV, POS rollouts, networking and Wi-Fi, structured cabling, access control, alarms, kiosks and signage, on-site IT, VOIP, and after-hours dispatch. All on DeployFleet."
+  breadcrumbs={crumbs}
+  schema={[{
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'DeployFleet service categories',
+    itemListElement: SERVICES.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.title, url: `${SITE.url}/services/${s.slug}/` })),
+  }]}
+>
+  <PageHero
+    eyebrow="What we cover"
+    title="Field services for every location"
+    text="Verified technicians across IT and low-voltage categories, for on-demand and scheduled work, including after-hours and weekends."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="card-grid">
+        {SERVICES.map((s) => <ServiceCard service={s} headingLevel="h2" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow"><Icon name="tools" />How it helps</span>
+          <h2>Coverage you can count on</h2>
+        </div>
+        <p>Whatever the job type, every dispatch gets the same matching, tracking and proof of work.</p>
+      </div>
+      <ul class="helps">
+        {HELPS.map((h) => <li class="reveal"><span class="tick"><Icon name="check" /></span>{h}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

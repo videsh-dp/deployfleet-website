@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Page not found" description="The page you’re looking for doesn’t exist." noindex>
+  <section class="page-hero" style="min-height:60vh;display:flex;align-items:center">
+    <div class="container">
+      <span class="eyebrow"><Icon name="tools" />404</span>
+      <h1>This page went offline</h1>
+      <p>Let’s get you back on site.</p>
+      <div class="hero-ctas" style="margin-top:28px">
+        <a class="btn btn--primary" href="/">Go home <Icon name="arrow" /></a>
+        <a class="btn btn--outline" href="/services/">View services</a>
+      </div>
+    </div>
+  </section>
+</Base>

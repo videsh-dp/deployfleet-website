@@ -1,0 +1,29 @@
+---
+import { PROVIDER_STEPS_SHORT, TECH_STEPS_SHORT } from '../data/site';
+const groups = [
+  { id: 'providers', label: 'For Providers', steps: PROVIDER_STEPS_SHORT },
+  { id: 'technicians', label: 'For Technicians', steps: TECH_STEPS_SHORT },
+];
+---
+<div data-tabs>
+  <div class="tabs-wrap">
+    <div class="tabs" role="tablist" aria-label="How it works for">
+      {groups.map((g, i) => (
+        <button class="tab" role="tab" type="button" id={`tab-${g.id}`} aria-controls={`panel-${g.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{g.label}</button>
+      ))}
+    </div>
+  </div>
+  {groups.map((g, i) => (
+    <div class="tab-panel" role="tabpanel" id={`panel-${g.id}`} aria-labelledby={`tab-${g.id}`} hidden={i !== 0}>
+      <ol class="steps">
+        {g.steps.map((s, n) => (
+          <li class="step">
+            <span class="step-num" aria-hidden="true">0{n + 1}</span>
+            <h3><span class="sr-only">Step {n + 1}: </span>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  ))}
+</div>

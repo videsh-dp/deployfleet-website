@@ -1,0 +1,8 @@
+---
+interface Props { variant?: 'dark' | 'light' }
+const { variant = 'dark' } = Astro.props;
+---
+<a href="/" class="logo" aria-label="DeployFleet home">
+  <img src={`/img/logo-mark-${variant}.svg`} alt="" width="44" height="27" />
+  <span class="logo-text">Deploy<b>Fleet</b></span>
+</a>

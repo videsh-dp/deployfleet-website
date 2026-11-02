@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import BadgeRing from '../components/BadgeRing.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import StepsTabs from '../components/StepsTabs.astro';
+import Features from '../components/Features.astro';
+import CtaBand from '../components/CtaBand.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import { SITE, HELPS, appLinks } from '../data/site';
+import { SERVICES } from '../data/services';
+
+// PLACEHOLDER stats from the mockup. Replace with real numbers before launch.
+const stats = [
+  { num: '25+', label: 'Experience in business' },
+  { num: '95%', label: 'Support and satisfaction' },
+  { num: '750+', label: 'Satisfied customers' },
+];
+const brandSlots = 5; // replace with real customer logos when available
+const featured = SERVICES.slice(0, 6);
+---
+<Base
+  title="DeployFleet | On-Demand Field Technicians for IT & Low-Voltage Work"
+  description="Post, match, track, close out and pay. DeployFleet dispatches verified field technicians for POS, networking, cabling, CCTV, access control, alarms and more, including after-hours and weekends."
+  schema={[{
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Field technician dispatch',
+    provider: { '@id': `${SITE.url}/#organization` },
+    areaServed: { '@type': 'Country', name: 'United States' },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Field service categories',
+      itemListElement: SERVICES.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: s.short, url: `${SITE.url}/services/${s.slug}/` } })),
+    },
+  }]}
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow"><Icon name="tools" />Trusted tech services</span>
+        <h1>On-Demand Field Techs. Verified. Ready.</h1>
+        <p class="hero-lead">The smarter way for businesses to hire skilled technicians: fast, flexible, and nationwide.</p>
+        <div class="hero-ctas">
+          <a class="btn btn--primary" href={appLinks.register}>Start Now <Icon name="arrow" /></a>
+          <a class="btn btn--white" href="/services/">View Services <Icon name="arrow" /></a>
+        </div>
+        <div class="hero-stats">
+          {stats.map((s) => <div><span class="stat-num">{s.num}</span><span class="stat-label">{s.label}</span></div>)}
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="/img/tech-hero.webp" alt="DeployFleet field technician in a blue uniform holding a laptop" width="640" height="832" fetchpriority="high" />
+        <BadgeRing />
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands -->
+  <section class="brand-strip" aria-label="Brands that trust DeployFleet">
+    <div class="container brand-inner">
+      <p class="brand-title">Brands That Already Trust<br /> DeployFleet</p>
+      <ul class="brand-logos">
+        {Array.from({ length: brandSlots }).map(() => (
+          <li class="brand-slot"><Icon name="building" />Your brand</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section">
+    <div class="container split">
+      <div class="split-media reveal">
+        <img src="/img/tech-handshake.jpg" alt="Technician with a toolbox greeting a business owner on site" width="640" height="832" loading="lazy" decoding="async" />
+        <BadgeRing />
+      </div>
+      <div class="reveal">
+        <span class="eyebrow"><Icon name="tools" />About our company</span>
+        <h2>We Provide Experienced Tech Services</h2>
+        <p class="lead">When a site goes down, finding the right technician quickly shouldn’t feel like a scramble. We connect businesses and service providers with skilled, verified field technicians for on-demand and scheduled IT and low-voltage work.</p>
+        <div class="about-grid">
+          <ul class="check-list">
+            <li><Icon name="arrow" />Request &amp; Scheduling</li>
+            <li><Icon name="arrow" />Smart Matching by Skill &amp; Location</li>
+            <li><Icon name="arrow" />After-Hours &amp; Weekend Availability</li>
+            <li><Icon name="arrow" />Photo-Documented Closeouts</li>
+          </ul>
+          <div class="about-proof">
+            <div class="avatars" aria-hidden="true"><span>JD</span><span>MK</span><span>AR</span><span>+1</span></div>
+            <p class="proof-num">5k+</p>
+            <p class="proof-label">Happy clients all over the U.S.</p>
+          </div>
+        </div>
+        <div class="about-actions">
+          <a class="btn btn--primary" href="/about/">About Us <Icon name="arrow" /></a>
+          <a class="call" href={SITE.phoneHref}>
+            <span class="call-icon"><Icon name="phone" /></span>
+            <span><small>Call Us Now</small><strong>{SITE.phone}</strong></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section section--soft" id="services">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow"><Icon name="tools" />Our services</span>
+          <h2>Expert and Reliable Tech you can Trust</h2>
+        </div>
+        <p>Connect with verified technicians or get hired for on-demand jobs, anytime, anywhere across the U.S.</p>
+      </div>
+      <div class="card-grid">
+        {featured.map((s) => <ServiceCard service={s} />)}
+      </div>
+      <div class="section-foot"><a class="btn btn--ghost" href="/services/">View all services <Icon name="arrow" /></a></div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow"><Icon name="tools" />How it works</span>
+        <h2>How DeployFleet Works</h2>
+        <p>{SITE.oneLiner}</p>
+      </div>
+      <StepsTabs />
+      <div class="section-foot"><a class="btn btn--ghost" href="/how-it-works/">See the full process <Icon name="arrow" /></a></div>
+    </div>
+  </section>
+
+  <Features />
+
+  <!-- Video + How it helps -->
+  <section class="section section--soft">
+    <div class="container video-split">
+      <div class="reveal">
+        <span class="eyebrow"><Icon name="tools" />How it helps</span>
+        <h2>Speed with accountability</h2>
+        <p class="lead">Keep locations running smoothly with technicians you can trust and documentation you can verify.</p>
+        <ul class="helps" style="grid-template-columns:1fr">
+          {HELPS.map((h) => <li><span class="tick"><Icon name="check" /></span>{h}</li>)}
+        </ul>
+      </div>
+      <div class="reveal">
+        <!-- Add youtubeId + uploadDate when the video is ready -->
+        <VideoEmbed title="DeployFleet in 90 seconds" description="See how providers post, match, track, close out and pay for field service jobs on DeployFleet." />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

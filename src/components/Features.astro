@@ -1,0 +1,26 @@
+---
+import Icon from './Icon.astro';
+import { DIFFERENTIATORS } from '../data/site';
+interface Props { light?: boolean }
+const { light = false } = Astro.props;
+---
+<section class={`section ${light ? 'section--light-features' : 'section--dark'}`}>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow"><Icon name="tools" />Why DeployFleet</span>
+        <h2>What Makes DeployFleet Different</h2>
+      </div>
+      <p>Built to remove the biggest problems in dispatch: chasing technicians, unclear scopes, inconsistent closeouts, and slow updates.</p>
+    </div>
+    <div class="feature-grid">
+      {DIFFERENTIATORS.map((d) => (
+        <div class="feature reveal">
+          <div class="feature-icon"><Icon name={d.icon} /></div>
+          <h3>{d.title}</h3>
+          <p>{d.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

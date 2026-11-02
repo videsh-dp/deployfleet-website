@@ -1,0 +1,20 @@
+---
+import Icon from './Icon.astro';
+interface Props { eyebrow: string; title: string; text?: string; crumbs: { name: string; path: string }[] }
+const { eyebrow, title, text, crumbs } = Astro.props;
+---
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      {crumbs.map((c, i) => (
+        i < crumbs.length - 1
+          ? <><a href={c.path}>{c.name}</a><span aria-hidden="true">/</span></>
+          : <span aria-current="page">{c.name}</span>
+      ))}
+    </nav>
+    <span class="eyebrow"><Icon name="tools" />{eyebrow}</span>
+    <h1>{title}</h1>
+    {text && <p>{text}</p>}
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import Features from '../components/Features.astro';
+import CtaBand from '../components/CtaBand.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import { SITE, PROVIDER_STEPS, TECH_STEPS, appLinks } from '../data/site';
+
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'How It Works', path: '/how-it-works/' }];
+const groups = [
+  { id: 'providers', icon: 'building', eyebrow: 'Companies / Dispatch Teams', title: 'For Providers', steps: PROVIDER_STEPS, cta: 'Post a Job', soft: false },
+  { id: 'technicians', icon: 'wrench', eyebrow: 'Field Techs / Installers', title: 'For Technicians', steps: TECH_STEPS, cta: 'Join as a Technician', soft: true },
+];
+const howTo = groups.map((g) => ({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: `How DeployFleet works ${g.title.toLowerCase()}`,
+  step: g.steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.title, text: s.text, url: `${SITE.url}/how-it-works/#${g.id}` })),
+}));
+---
+<Base
+  title="How DeployFleet Works | Post, Match, Track, Close Out, Pay"
+  description="See how DeployFleet works for providers and technicians: post a job, match by skill and availability, track progress, get structured closeouts, and pay with confidence."
+  breadcrumbs={crumbs}
+  schema={howTo}
+>
+  <PageHero eyebrow="How it works" title="How DeployFleet Works" text={SITE.oneLiner} crumbs={crumbs}>
+    <div class="hero-ctas" style="margin-top:28px">
+      <a class="btn btn--primary" href="#providers">For Providers <Icon name="arrow" /></a>
+      <a class="btn btn--outline" href="#technicians">For Technicians <Icon name="arrow" /></a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container video-split">
+      <div class="prose reveal">
+        <span class="eyebrow"><Icon name="tools" />Overview</span>
+        <h2>Dispatch without the chaos</h2>
+        <p class="lead">DeployFleet makes it simple to post, dispatch, complete, and close out field service jobs, whether you’re a company that needs coverage or a technician looking for quality work.</p>
+        <p>The platform is built to remove the biggest problems in dispatch: chasing technicians, unclear scopes, inconsistent closeouts, and slow updates.</p>
+      </div>
+      <div class="reveal">
+        <VideoEmbed title="How DeployFleet works" description="A walkthrough of posting, matching, tracking and closing out a field service job on DeployFleet." />
+      </div>
+    </div>
+  </section>
+
+  {groups.map((g) => (
+    <section class={`section${g.soft ? ' section--soft' : ''}`} id={g.id} style="scroll-margin-top:var(--header-h)">
+      <div class="container" style="max-width:900px">
+        <div class="audience-head">
+          <span class="audience-icon"><Icon name={g.icon} /></span>
+          <div>
+            <span class="eyebrow" style="margin:0">{g.eyebrow}</span>
+            <h2>{g.title}</h2>
+          </div>
+        </div>
+        <ol class="flow">
+          {g.steps.map((s, i) => (
+            <li class="flow-item reveal">
+              <span class="step-num" aria-hidden="true">0{i + 1}</span>
+              <div class="flow-body">
+                <h3><span class="sr-only">Step {i + 1}: </span>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div class="section-foot" style="justify-content:flex-start;padding-left:74px">
+          <a class="btn btn--primary" href={appLinks.register}>{g.cta} <Icon name="arrow" /></a>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <Features />
+  <CtaBand />
+</Base>

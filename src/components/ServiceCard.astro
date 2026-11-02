@@ -1,0 +1,13 @@
+---
+import Icon from './Icon.astro';
+import type { Service } from '../data/services';
+interface Props { service: Service; headingLevel?: 'h2' | 'h3' }
+const { service: s, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+---
+<article class={`service-card reveal${s.accent ? ' service-card--accent' : ''}`}>
+  <div class="service-icon"><Icon name={s.icon} /></div>
+  <H class="h3">{s.title}</H>
+  <p>{s.short}</p>
+  <a class="link-more" href={`/services/${s.slug}/`}>Read more<span class="sr-only"> about {s.title}</span> <Icon name="arrow-right" /></a>
+</article>

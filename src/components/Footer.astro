@@ -1,0 +1,49 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { SITE, appLinks } from '../data/site';
+import { SERVICES } from '../data/services';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <Logo variant="light" />
+        <p>Speed with accountability. DeployFleet connects businesses with skilled, verified field technicians for on-demand and scheduled IT and low-voltage work.</p>
+        <a class="btn btn--primary" href={appLinks.register}>Post a Job <Icon name="arrow" /></a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="/about/">About Us</a></li>
+          <li><a href="/how-it-works/#providers">For Providers</a></li>
+          <li><a href="/how-it-works/#technicians">For Technicians</a></li>
+          <li><a href="/contact/">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul class="footer-links">
+          {SERVICES.slice(0, 6).map((s) => <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>)}
+          <li><a href="/services/">View all services</a></li>
+        </ul>
+      </div>
+      <div class="footer-cta">
+        <h4>Get in touch</h4>
+        <ul class="footer-links">
+          <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
+          <li><a href={appLinks.register}>Join as a Technician</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} DeployFleet. All rights reserved.</span>
+      <nav aria-label="Legal">
+        <a href="/contact/">Support</a>
+        <a href={appLinks.login}>Log In</a>
+      </nav>
+    </div>
+  </div>
+</footer>
