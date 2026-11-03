@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import BadgeRing from '../components/BadgeRing.astro';
@@ -44,14 +45,14 @@ const featured = SERVICES.slice(0, 6);
         <p class="hero-lead">The smarter way for businesses to hire skilled technicians: fast, flexible, and nationwide.</p>
         <div class="hero-ctas">
           <a class="btn btn--primary" href={appLinks.register}>Start Now <Icon name="arrow" /></a>
-          <a class="btn btn--white" href="/services/">View Services <Icon name="arrow" /></a>
+          <a class="btn btn--white" href={u('/services/')}>View Services <Icon name="arrow" /></a>
         </div>
         <div class="hero-stats">
           {stats.map((s) => <div><span class="stat-num">{s.num}</span><span class="stat-label">{s.label}</span></div>)}
         </div>
       </div>
       <div class="hero-media">
-        <img src="/img/tech-hero.webp" alt="DeployFleet field technician in a blue uniform holding a laptop" width="640" height="832" fetchpriority="high" />
+        <img src={u('/img/tech-hero.webp')} alt="DeployFleet field technician in a blue uniform holding a laptop" width="640" height="832" fetchpriority="high" />
         <BadgeRing />
       </div>
     </div>
@@ -73,7 +74,7 @@ const featured = SERVICES.slice(0, 6);
   <section class="section">
     <div class="container split">
       <div class="split-media reveal">
-        <img src="/img/tech-handshake.jpg" alt="Technician with a toolbox greeting a business owner on site" width="640" height="832" loading="lazy" decoding="async" />
+        <img src={u('/img/tech-handshake.jpg')} alt="Technician with a toolbox greeting a business owner on site" width="640" height="832" loading="lazy" decoding="async" />
         <BadgeRing />
       </div>
       <div class="reveal">
@@ -94,7 +95,7 @@ const featured = SERVICES.slice(0, 6);
           </div>
         </div>
         <div class="about-actions">
-          <a class="btn btn--primary" href="/about/">About Us <Icon name="arrow" /></a>
+          <a class="btn btn--primary" href={u('/about/')}>About Us <Icon name="arrow" /></a>
           <a class="call" href={SITE.phoneHref}>
             <span class="call-icon"><Icon name="phone" /></span>
             <span><small>Call Us Now</small><strong>{SITE.phone}</strong></span>
@@ -117,7 +118,7 @@ const featured = SERVICES.slice(0, 6);
       <div class="card-grid">
         {featured.map((s) => <ServiceCard service={s} />)}
       </div>
-      <div class="section-foot"><a class="btn btn--ghost" href="/services/">View all services <Icon name="arrow" /></a></div>
+      <div class="section-foot"><a class="btn btn--ghost" href={u('/services/')}>View all services <Icon name="arrow" /></a></div>
     </div>
   </section>
 
@@ -130,7 +131,7 @@ const featured = SERVICES.slice(0, 6);
         <p>{SITE.oneLiner}</p>
       </div>
       <StepsTabs />
-      <div class="section-foot"><a class="btn btn--ghost" href="/how-it-works/">See the full process <Icon name="arrow" /></a></div>
+      <div class="section-foot"><a class="btn btn--ghost" href={u('/how-it-works/')}>See the full process <Icon name="arrow" /></a></div>
     </div>
   </section>
 

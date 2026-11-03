@@ -1,5 +1,7 @@
 ---
+import { u } from '../lib/url';
 import '../styles/global.css';
+import fontRegular from '../assets/fonts/EuclidCircularB-Regular.ttf?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../data/site';
@@ -16,16 +18,16 @@ const { title, description, image = SITE.ogImage, schema = [], noindex = false, 
 
 const site = Astro.site ?? new URL(SITE.url);
 const canonical = new URL(Astro.url.pathname, site).href;
-const ogImage = new URL(image, site).href;
+const ogImage = new URL(u(image), site).href;
 const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  '@id': `${site.origin}/#organization`,
+  '@id': `${SITE.url}/#organization`,
   name: SITE.name,
-  url: site.origin,
-  logo: new URL('/img/logo-mark-dark.svg', site).href,
+  url: `${SITE.url}/`,
+  logo: new URL(u('/img/logo-mark-dark.svg'), site).href,
   description: SITE.description,
   email: SITE.email,
   sameAs: SITE.social.map((s) => s.href),
@@ -33,10 +35,10 @@ const orgSchema = {
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  '@id': `${site.origin}/#website`,
+  '@id': `${SITE.url}/#website`,
   name: SITE.name,
-  url: site.origin,
-  publisher: { '@id': `${site.origin}/#organization` },
+  url: `${SITE.url}/`,
+  publisher: { '@id': `${SITE.url}/#organization` },
 };
 const breadcrumbSchema = breadcrumbs && {
   '@context': 'https://schema.org',
@@ -45,7 +47,7 @@ const breadcrumbSchema = breadcrumbs && {
     '@type': 'ListItem',
     position: i + 1,
     name: b.name,
-    item: new URL(b.path, site).href,
+    item: new URL(u(b.path), site).href,
   })),
 };
 const allSchema = [orgSchema, websiteSchema, ...(breadcrumbSchema ? [breadcrumbSchema] : []), ...schema];
@@ -61,11 +63,11 @@ const allSchema = [orgSchema, websiteSchema, ...(breadcrumbSchema ? [breadcrumbS
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#0099FF" />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="preload" href="/fonts/EuclidCircularB-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={u('/favicon.ico')} sizes="any" />
+    <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
+    <link rel="sitemap" href={u('/sitemap-index.xml')} />
+    <link rel="preload" href={fontRegular} as="font" type="font/ttf" crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />

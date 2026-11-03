@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import { SITE, appLinks } from '../data/site';
@@ -16,17 +17,17 @@ const year = new Date().getFullYear();
       <div>
         <h4>Company</h4>
         <ul class="footer-links">
-          <li><a href="/about/">About Us</a></li>
-          <li><a href="/how-it-works/#providers">For Providers</a></li>
-          <li><a href="/how-it-works/#technicians">For Technicians</a></li>
-          <li><a href="/contact/">Contact Us</a></li>
+          <li><a href={u('/about/')}>About Us</a></li>
+          <li><a href={u('/how-it-works/#providers')}>For Providers</a></li>
+          <li><a href={u('/how-it-works/#technicians')}>For Technicians</a></li>
+          <li><a href={u('/contact/')}>Contact Us</a></li>
         </ul>
       </div>
       <div>
         <h4>Services</h4>
         <ul class="footer-links">
-          {SERVICES.slice(0, 6).map((s) => <li><a href={`/services/${s.slug}/`}>{s.title}</a></li>)}
-          <li><a href="/services/">View all services</a></li>
+          {SERVICES.slice(0, 6).map((s) => <li><a href={u(`/services/${s.slug}/`)}>{s.title}</a></li>)}
+          <li><a href={u('/services/')}>View all services</a></li>
         </ul>
       </div>
       <div class="footer-cta">
@@ -41,7 +42,7 @@ const year = new Date().getFullYear();
     <div class="footer-bottom">
       <span>© {year} DeployFleet. All rights reserved.</span>
       <nav aria-label="Legal">
-        <a href="/contact/">Support</a>
+        <a href={u('/contact/')}>Support</a>
         <a href={appLinks.login}>Log In</a>
       </nav>
     </div>
