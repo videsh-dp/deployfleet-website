@@ -12,8 +12,9 @@ export const SITE = {
     'DeployFleet connects businesses with verified field technicians for on-demand and scheduled IT and low-voltage work: POS, networking, cabling, CCTV, access control and more.',
   oneLiner:
     'DeployFleet makes field service simple: post, match, track, close out, and pay, all in one place.',
-  phone: '+1 (123) 456 7890', // PLACEHOLDER
-  phoneHref: 'tel:+11234567890', // PLACEHOLDER
+  // Leave phone empty to hide every phone link on the site.
+  phone: '', // e.g. '+1 (555) 010 2030'
+  phoneHref: '', // e.g. 'tel:+15550102030'
   email: 'support@deployfleet.com', // PLACEHOLDER: confirm inbox
   ogImage: '/og-image.png',
   social: [] as { label: string; href: string }[],
@@ -36,6 +37,28 @@ export const VIDEOS = {
   },
 };
 
+// Marketing proof points. Each block is hidden until it has real content.
+export const PROOF = {
+  // Hero stats, e.g. { num: '750+', label: 'Jobs completed' }
+  stats: [] as { num: string; label: string }[],
+  // Customer logos for the blue strip: { name, src } with src under public/img/brands/
+  brands: [] as { name: string; src: string }[],
+  // About-section figure, e.g. { num: '5k+', label: 'Jobs dispatched across the U.S.' }
+  highlight: null as null | { num: string; label: string },
+};
+
+// Testimonials: the section appears on Home and the technician page once this has entries.
+// audience: 'provider' | 'technician'
+export const TESTIMONIALS: { quote: string; name: string; role: string; audience: 'provider' | 'technician' }[] = [];
+
+// Third-party services, configured with GitHub repo variables (Settings → Secrets and variables → Actions → Variables).
+export const INTEGRATIONS = {
+  // Formspree form ID (the part after /f/ in your form endpoint). Empty = form opens the visitor's email app.
+  formspreeId: import.meta.env.PUBLIC_FORMSPREE_ID ?? '',
+  // Google Analytics 4 measurement ID (G-XXXXXXX). Empty = no analytics.
+  gaId: import.meta.env.PUBLIC_GA_ID ?? '',
+};
+
 export const appLinks = {
   register: `${SITE.appUrl}/register`,
   login: `${SITE.appUrl}/login`,
@@ -51,6 +74,7 @@ export const NAV = [
       { label: 'Overview', href: '/how-it-works/' },
       { label: 'For Providers', href: '/how-it-works/#providers' },
       { label: 'For Technicians', href: '/how-it-works/#technicians' },
+      { label: 'Become a Technician', href: '/technicians/' },
     ],
   },
   { label: 'Services', href: '/services/', children: 'services' as const },

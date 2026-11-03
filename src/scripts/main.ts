@@ -105,12 +105,31 @@ if ('IntersectionObserver' in window) {
   reveals.forEach((el) => el.classList.add('is-visible'));
 }
 
-// Contact form (no backend yet): validate and hand off to the visitor's email client.
+// Contact form: posts to Formspree when configured, otherwise hands off to the visitor's email app.
 const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
-form?.addEventListener('submit', (e) => {
+form?.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (!form.reportValidity()) return;
   const d = new FormData(form);
+  form.classList.remove('is-sent', 'has-error');
+  const endpoint = form.dataset.endpoint;
+  if (endpoint) {
+    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (btn) btn.disabled = true;
+    try {
+      d.set('_subject', `[Website] ${d.get('role')} inquiry from ${d.get('name')}`);
+      const res = await fetch(endpoint, { method: 'POST', body: d, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      form.classList.add('is-sent');
+      (window as any).gtag?.('event', 'generate_lead', { form: 'contact' });
+    } catch {
+      form.classList.add('has-error');
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+    return;
+  }
   const to = form.dataset.to ?? '';
   const subject = `[Website] ${d.get('role')} inquiry from ${d.get('name')}`;
   const body = [
