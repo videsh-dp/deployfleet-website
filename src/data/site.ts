@@ -3,7 +3,9 @@ export const SITE = {
   name: 'DeployFleet',
   tagline: 'On Demand Technicians',
   // Public URL of the marketing site (used for canonical URLs, sitemap, schema).
-  url: 'https://www.deployfleet.com',
+  url:
+    (import.meta.env.SITE ?? 'https://www.deployfleet.com').replace(/\/$/, '') +
+    import.meta.env.BASE_URL.replace(/\/$/, ''),
   // The DeployFleet web app (sign-up / login / post a job).
   appUrl: 'https://www.deployfleet.com',
   description:

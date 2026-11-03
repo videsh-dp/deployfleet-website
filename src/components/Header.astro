@@ -1,11 +1,12 @@
 ---
+import { u } from '../lib/url';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import { NAV, appLinks } from '../data/site';
 import { SERVICES } from '../data/services';
 
 const path = Astro.url.pathname;
-const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const isActive = (href: string) => (href === '/' ? path === u('/') : path.startsWith(u(href)));
 const serviceLinks = [{ label: 'All Services', href: '/services/' }, ...SERVICES.map((s) => ({ label: s.title, href: `/services/${s.slug}/` }))];
 ---
 <header class="site-header" data-header>
@@ -22,11 +23,11 @@ const serviceLinks = [{ label: 'All Services', href: '/services/' }, ...SERVICES
                 <Icon name="caret" class="caret" />
               </button>
               <ul class="dropdown">
-                {children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+                {children.map((c) => <li><a href={u(c.href)}>{c.label}</a></li>)}
               </ul>
             </li>
           ) : (
-            <li><a class="nav-link" href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+            <li><a class="nav-link" href={u(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
           );
         })}
       </ul>

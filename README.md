@@ -61,8 +61,11 @@ npm run build     # outputs to dist/
 npm run preview
 ```
 
-Set `SITE_URL` at build time if the site is served from a different domain (default `https://www.deployfleet.com`), and update the `Sitemap:` line in `public/robots.txt` to match.
+Set `SITE_URL` (domain, default `https://www.deployfleet.com`) and `BASE_PATH` (sub-folder, default `/`) at build time. Canonical URLs, the sitemap and `robots.txt` follow them. Always link internal pages with the `u()` helper from `src/lib/url.ts` so the base path is applied.
 
 ## Deploy
 
+**GitHub Pages (current):** `.github/workflows/deploy-pages.yml` builds and deploys on every push to `main`, at `https://<owner>.github.io/<repo>/`. One-time setup: repo Settings → Pages → Source: **GitHub Actions**. (Pages on a private repo needs a paid GitHub plan; otherwise make the repo public.)
+
+**Elsewhere:** 
 `dist/` is a plain static folder: deploy to Firebase Hosting, Netlify, Vercel, Cloudflare Pages, or S3. Note: if this site takes over `deployfleet.com`, the web app needs its own host (e.g. `app.deployfleet.com`) and `appUrl` in `src/data/site.ts` should point there.

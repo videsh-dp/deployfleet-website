@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import PageHero from '../components/PageHero.astro';
@@ -30,7 +31,7 @@ const pillars = [
   <section class="section">
     <div class="container split">
       <div class="split-media reveal">
-        <img src="/img/tech-handshake.jpg" alt="Technician with a toolbox greeting a business owner on site" width="640" height="832" loading="lazy" decoding="async" />
+        <img src={u('/img/tech-handshake.jpg')} alt="Technician with a toolbox greeting a business owner on site" width="640" height="832" loading="lazy" decoding="async" />
         <BadgeRing />
       </div>
       <div class="prose reveal">
@@ -70,7 +71,7 @@ const pillars = [
       <p class="lead">At the end of the day, DeployFleet is about speed with accountability: helping companies keep locations running smoothly while giving technicians a reliable way to grow their business, one well-executed job at a time.</p>
       <div class="hero-ctas" style="justify-content:center;margin-top:28px">
         <a class="btn btn--primary" href={appLinks.register}>Post a Job <Icon name="arrow" /></a>
-        <a class="btn btn--ghost" href="/how-it-works/">How it works <Icon name="arrow" /></a>
+        <a class="btn btn--ghost" href={u('/how-it-works/')}>How it works <Icon name="arrow" /></a>
       </div>
     </div>
   </section>
