@@ -11,7 +11,9 @@ Static, SEO-focused marketing website for [DeployFleet](https://www.deployfleet.
 | `/how-it-works/` (`#providers`, `#technicians`) | `src/pages/how-it-works.astro` |
 | `/services/` | `src/pages/services/index.astro` |
 | `/services/<slug>/` (10 pages) | `src/pages/services/[slug].astro` + `src/data/services.ts` |
+| `/technicians/` | `src/pages/technicians.astro` |
 | `/contact/` | `src/pages/contact.astro` |
+| `/privacy/`, `/terms/` | `src/pages/privacy.astro`, `src/pages/terms.astro` |
 
 ## Editing content
 
@@ -20,12 +22,26 @@ Static, SEO-focused marketing website for [DeployFleet](https://www.deployfleet.
 - **Colors / fonts:** `src/styles/global.css` (`:root` tokens mirror `apps/ui/src/lib/utils/theme/colors.ts` in the app repo: `#0099FF` primary, `#5442F5` secondary, Euclid Circular B).
 - **Images:** `public/img/`. Social preview image: `public/og-image.png` (1200×630).
 
-### Placeholders to replace before launch
+### Proof points, testimonials and contact details
 
-Search for `PLACEHOLDER` in `src/`:
-- Hero stats (25+, 95%, 750+) and the "5k+ happy clients" figure come from the mockup.
-- Phone number `+1 (123) 456 7890` and `support@deployfleet.com`.
-- "Your brand" slots in the blue strip (`brandSlots` in `src/pages/index.astro`): swap for customer logos.
+In `src/data/site.ts`:
+- `PROOF.stats`, `PROOF.brands`, `PROOF.highlight`: hero stats, customer logos and the About figure. Each block stays hidden while empty (the hero shows three feature bullets and the blue strip shows service shortcuts instead).
+- `TESTIMONIALS`: real, attributable quotes only. The section appears on Home (all) and `/technicians/` (technician quotes) once it has entries.
+- `SITE.phone` / `SITE.phoneHref`: leave empty to hide all phone links.
+
+### Contact form and analytics
+
+Set these as GitHub repo **variables** (Settings → Secrets and variables → Actions → Variables); the deploy workflow passes them to the build:
+- `FORMSPREE_ID`: the ID from your Formspree form endpoint (`https://formspree.io/f/<ID>`). Without it, the form opens the visitor's email app.
+- `GA_MEASUREMENT_ID`: Google Analytics 4 ID (`G-…`). Without it, no analytics script loads. Form submissions send a `generate_lead` event.
+
+Re-run the "Deploy to GitHub Pages" workflow after changing a variable.
+
+### Legal pages
+
+`/privacy/` and `/terms/` are general-purpose drafts for the marketing site. Have them reviewed before relying on them.
+
+Also confirm `SITE.email` (`support@deployfleet.com`) is a real inbox.
 
 ### Adding videos
 

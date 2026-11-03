@@ -5,7 +5,7 @@ import PageHero from '../components/PageHero.astro';
 import Features from '../components/Features.astro';
 import CtaBand from '../components/CtaBand.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
-import { SITE, PROVIDER_STEPS, TECH_STEPS, appLinks } from '../data/site';
+import { SITE, PROVIDER_STEPS, TECH_STEPS, VIDEOS, appLinks } from '../data/site';
 
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'How It Works', path: '/how-it-works/' }];
 const groups = [
@@ -33,16 +33,16 @@ const howTo = groups.map((g) => ({
   </PageHero>
 
   <section class="section">
-    <div class="container video-split">
+    <div class:list={['container', 'video-split', { 'video-split--solo': !VIDEOS.howItWorks.youtubeId }]}>
       <div class="prose reveal">
         <span class="eyebrow"><Icon name="tools" />Overview</span>
         <h2>Dispatch without the chaos</h2>
         <p class="lead">DeployFleet makes it simple to post, dispatch, complete, and close out field service jobs, whether you’re a company that needs coverage or a technician looking for quality work.</p>
         <p>The platform is built to remove the biggest problems in dispatch: chasing technicians, unclear scopes, inconsistent closeouts, and slow updates.</p>
       </div>
-      <div class="reveal">
-        <VideoEmbed title="How DeployFleet works" description="A walkthrough of posting, matching, tracking and closing out a field service job on DeployFleet." />
-      </div>
+      {VIDEOS.howItWorks.youtubeId && (
+        <div class="reveal"><VideoEmbed {...VIDEOS.howItWorks} /></div>
+      )}
     </div>
   </section>
 

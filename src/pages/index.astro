@@ -8,16 +8,13 @@ import StepsTabs from '../components/StepsTabs.astro';
 import Features from '../components/Features.astro';
 import CtaBand from '../components/CtaBand.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
-import { SITE, HELPS, appLinks } from '../data/site';
+import Testimonials from '../components/Testimonials.astro';
+import { SITE, HELPS, VIDEOS, PROOF, appLinks } from '../data/site';
 import { SERVICES } from '../data/services';
 
-// PLACEHOLDER stats from the mockup. Replace with real numbers before launch.
-const stats = [
-  { num: '25+', label: 'Experience in business' },
-  { num: '95%', label: 'Support and satisfaction' },
-  { num: '750+', label: 'Satisfied customers' },
-];
-const brandSlots = 5; // replace with real customer logos when available
+// Stats, logos and the highlight figure come from PROOF in src/data/site.ts and are hidden while empty.
+const { stats, brands, highlight } = PROOF;
+const shortcutLabels: Record<string, string> = { 'cctv-surveillance': 'CCTV', 'pos-installs-rollouts': 'POS', 'networking-wifi': 'Networking', 'structured-cabling': 'Cabling', 'access-control': 'Access Control' };
 const featured = SERVICES.slice(0, 6);
 ---
 <Base
@@ -47,9 +44,18 @@ const featured = SERVICES.slice(0, 6);
           <a class="btn btn--primary" href={appLinks.register}>Start Now <Icon name="arrow" /></a>
           <a class="btn btn--white" href={u('/services/')}>View Services <Icon name="arrow" /></a>
         </div>
-        <div class="hero-stats">
-          {stats.map((s) => <div><span class="stat-num">{s.num}</span><span class="stat-label">{s.label}</span></div>)}
-        </div>
+        {stats.length > 0 && (
+          <div class="hero-stats">
+            {stats.map((s) => <div><span class="stat-num">{s.num}</span><span class="stat-label">{s.label}</span></div>)}
+          </div>
+        )}
+        {stats.length === 0 && (
+          <ul class="hero-points">
+            <li><Icon name="shield" />Verified technicians</li>
+            <li><Icon name="clock" />After-hours &amp; weekends</li>
+            <li><Icon name="clipboard" />Photo-documented closeouts</li>
+          </ul>
+        )}
       </div>
       <div class="hero-media">
         <img src={u('/img/tech-hero.webp')} alt="DeployFleet field technician in a blue uniform holding a laptop" width="640" height="832" fetchpriority="high" />
@@ -58,17 +64,30 @@ const featured = SERVICES.slice(0, 6);
     </div>
   </section>
 
-  <!-- Brands -->
-  <section class="brand-strip" aria-label="Brands that trust DeployFleet">
-    <div class="container brand-inner">
-      <p class="brand-title">Brands That Already Trust<br /> DeployFleet</p>
-      <ul class="brand-logos">
-        {Array.from({ length: brandSlots }).map(() => (
-          <li class="brand-slot"><Icon name="building" />Your brand</li>
-        ))}
-      </ul>
-    </div>
-  </section>
+  <!-- Brands (shown once PROOF.brands has logos) -->
+  {brands.length > 0 ? (
+    <section class="brand-strip" aria-label="Brands that trust DeployFleet">
+      <div class="container brand-inner">
+        <p class="brand-title">Brands That Already Trust<br /> DeployFleet</p>
+        <ul class="brand-logos">
+          {brands.map((b) => (
+            <li class="brand-slot brand-slot--logo"><img src={u(b.src)} alt={b.name} loading="lazy" height="36" /></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ) : (
+    <section class="brand-strip" aria-label="Service categories">
+      <div class="container brand-inner">
+        <p class="brand-title">IT &amp; low-voltage coverage,<br /> on demand</p>
+        <ul class="brand-logos">
+          {SERVICES.slice(0, 5).map((s) => (
+            <li><a class="brand-slot" href={u(`/services/${s.slug}/`)}><Icon name={s.icon} />{shortcutLabels[s.slug] ?? s.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   <!-- About -->
   <section class="section">
@@ -81,25 +100,33 @@ const featured = SERVICES.slice(0, 6);
         <span class="eyebrow"><Icon name="tools" />About our company</span>
         <h2>We Provide Experienced Tech Services</h2>
         <p class="lead">When a site goes down, finding the right technician quickly shouldn’t feel like a scramble. We connect businesses and service providers with skilled, verified field technicians for on-demand and scheduled IT and low-voltage work.</p>
-        <div class="about-grid">
+        <div class:list={['about-grid', { 'about-grid--solo': !highlight }]}>
           <ul class="check-list">
             <li><Icon name="arrow" />Request &amp; Scheduling</li>
             <li><Icon name="arrow" />Smart Matching by Skill &amp; Location</li>
             <li><Icon name="arrow" />After-Hours &amp; Weekend Availability</li>
             <li><Icon name="arrow" />Photo-Documented Closeouts</li>
           </ul>
-          <div class="about-proof">
-            <div class="avatars" aria-hidden="true"><span>JD</span><span>MK</span><span>AR</span><span>+1</span></div>
-            <p class="proof-num">5k+</p>
-            <p class="proof-label">Happy clients all over the U.S.</p>
-          </div>
+          {highlight && (
+            <div class="about-proof">
+              <p class="proof-num">{highlight.num}</p>
+              <p class="proof-label">{highlight.label}</p>
+            </div>
+          )}
         </div>
         <div class="about-actions">
           <a class="btn btn--primary" href={u('/about/')}>About Us <Icon name="arrow" /></a>
-          <a class="call" href={SITE.phoneHref}>
-            <span class="call-icon"><Icon name="phone" /></span>
-            <span><small>Call Us Now</small><strong>{SITE.phone}</strong></span>
-          </a>
+          {SITE.phone ? (
+            <a class="call" href={SITE.phoneHref}>
+              <span class="call-icon"><Icon name="phone" /></span>
+              <span><small>Call Us Now</small><strong>{SITE.phone}</strong></span>
+            </a>
+          ) : (
+            <a class="call" href={`mailto:${SITE.email}`}>
+              <span class="call-icon"><Icon name="mail" /></span>
+              <span><small>Email us</small><strong>{SITE.email}</strong></span>
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -139,21 +166,22 @@ const featured = SERVICES.slice(0, 6);
 
   <!-- Video + How it helps -->
   <section class="section section--soft">
-    <div class="container video-split">
+    <div class:list={['container', 'video-split', { 'video-split--solo': !VIDEOS.home.youtubeId }]}>
       <div class="reveal">
         <span class="eyebrow"><Icon name="tools" />How it helps</span>
         <h2>Speed with accountability</h2>
         <p class="lead">Keep locations running smoothly with technicians you can trust and documentation you can verify.</p>
-        <ul class="helps" style="grid-template-columns:1fr">
+        <ul class:list={['helps', { 'helps--stack': VIDEOS.home.youtubeId }]}>
           {HELPS.map((h) => <li><span class="tick"><Icon name="check" /></span>{h}</li>)}
         </ul>
       </div>
-      <div class="reveal">
-        <!-- Add youtubeId + uploadDate when the video is ready -->
-        <VideoEmbed title="DeployFleet in 90 seconds" description="See how providers post, match, track, close out and pay for field service jobs on DeployFleet." />
-      </div>
+      {VIDEOS.home.youtubeId && (
+        <div class="reveal"><VideoEmbed {...VIDEOS.home} /></div>
+      )}
     </div>
   </section>
+
+  <Testimonials />
 
   <CtaBand />
 </Base>

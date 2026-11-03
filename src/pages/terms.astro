@@ -1,0 +1,36 @@
+---
+// NOTE: Website terms of use drafted for the marketing website. Have them reviewed by counsel before relying on them.
+import LegalPage from '../components/LegalPage.astro';
+import { u } from '../lib/url';
+import { SITE, appLinks } from '../data/site';
+---
+<LegalPage title="Terms of Service" description="Terms that apply to your use of the DeployFleet website." path="/terms/" updated="November 3, 2026">
+  <p>These Terms of Service govern your use of this website. By using the site, you agree to these terms. Use of the DeployFleet platform at <a href={appLinks.login}>deployfleet.com</a>, including posting or accepting jobs and payments, is governed by the separate agreements you accept when you create an account.</p>
+
+  <h2>Use of the site</h2>
+  <p>You may use this site for lawful purposes only. You agree not to interfere with the site’s operation, attempt to gain unauthorized access, or use automated means to collect content in a way that burdens the site.</p>
+
+  <h2>Content and trademarks</h2>
+  <p>The site and its content, including text, graphics, logos, and images, are owned by DeployFleet or its licensors and are protected by intellectual property laws. You may not copy or reuse them without permission, except for personal, non-commercial reference.</p>
+
+  <h2>Information on the site</h2>
+  <p>We aim to keep information on the site accurate and current, but it is provided for general information only and may change without notice. Descriptions of services do not guarantee technician availability in any particular area or time.</p>
+
+  <h2>Third-party links</h2>
+  <p>The site may link to third-party websites. We are not responsible for their content or practices.</p>
+
+  <h2>Disclaimer</h2>
+  <p>The site is provided “as is” and “as available”, without warranties of any kind, express or implied, to the fullest extent permitted by law.</p>
+
+  <h2>Limitation of liability</h2>
+  <p>To the fullest extent permitted by law, DeployFleet will not be liable for any indirect, incidental, special, or consequential damages arising from your use of the site.</p>
+
+  <h2>Privacy</h2>
+  <p>Our <a href={u('/privacy/')}>Privacy Policy</a> explains how we handle information collected through the site.</p>
+
+  <h2>Changes</h2>
+  <p>We may update these terms from time to time. Continued use of the site after changes means you accept the updated terms.</p>
+
+  <h2>Contact</h2>
+  <p>Questions? Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+</LegalPage>

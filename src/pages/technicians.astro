@@ -1,0 +1,122 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import Testimonials from '../components/Testimonials.astro';
+import { TECH_STEPS, appLinks } from '../data/site';
+import { SERVICES } from '../data/services';
+
+const crumbs = [{ name: 'Home', path: '/' }, { name: 'Become a Technician', path: '/technicians/' }];
+const benefits = [
+  { icon: 'clipboard', title: 'Know before you go', text: 'Every job shows scope, site info, expectations, and payout upfront, so you know what you’re walking into before you accept.' },
+  { icon: 'calendar', title: 'Work on your schedule', text: 'Set availability for regular hours, last-minute dispatch, after-hours calls, and weekends. You’re only matched to work that fits.' },
+  { icon: 'pin', title: 'Jobs near you', text: 'Choose your coverage radius and skills. DeployFleet surfaces jobs that match your location and what you actually do.' },
+  { icon: 'star', title: 'Build a reputation', text: 'Ratings, reviews, and completion history grow with every job, so your track record works for you.' },
+  { icon: 'users', title: 'Get repeat work', text: 'Consistent performers get invited into providers’ Favorite Tech Pools and see new work first.' },
+  { icon: 'route', title: 'Fewer surprises', text: 'Message the provider in the platform, get photos and access details, and update status without endless calls.' },
+];
+const faqs = [
+  { q: 'What kind of work is on DeployFleet?', a: 'IT and low-voltage field work: POS installs, networking and Wi-Fi, structured cabling, CCTV, access control, alarms, kiosks and signage, on-site IT support, VOIP, and after-hours dispatch.' },
+  { q: 'Do I choose which jobs I take?', a: 'Yes. You see the details and payout upfront and accept only the work that fits your schedule and skills.' },
+  { q: 'Can I work only nights or weekends?', a: 'Yes. Set your availability on your profile and you’ll be matched to jobs in those windows.' },
+  { q: 'How do I get more work over time?', a: 'Deliver clean closeouts with photos, notes and checklists. Strong ratings and completion history lead to invitations into providers’ Favorite Tech Pools.' },
+];
+---
+<Base
+  title="Become a Field Technician | Find IT & Low-Voltage Jobs"
+  description="Join DeployFleet as a field technician. Get matched to IT and low-voltage jobs near you, see payout upfront, set your own availability, and build a reputation that brings repeat work."
+  breadcrumbs={crumbs}
+  schema={[{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }]}
+>
+  <PageHero eyebrow="For technicians" title="Quality field work, on your terms" text="Get matched to IT and low-voltage jobs that fit your skills, location and schedule, with the details and payout upfront." crumbs={crumbs}>
+    <div class="hero-ctas" style="margin-top:28px">
+      <a class="btn btn--primary" href={appLinks.register}>Create your profile <Icon name="arrow" /></a>
+      <a class="btn btn--outline" href="#how">How it works</a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow"><Icon name="tools" />Why DeployFleet</span>
+          <h2>Built for technicians who do it right</h2>
+        </div>
+        <p>Transparency and professionalism: straightforward job expectations, a reputation built through reviews, and workflows that help you deliver quality work without confusion.</p>
+      </div>
+      <div class="pillars">
+        {benefits.map((b) => (
+          <div class="pillar reveal">
+            <div class="feature-icon"><Icon name={b.icon} /></div>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="how" style="scroll-margin-top:var(--header-h)">
+    <div class="container" style="max-width:900px">
+      <div class="audience-head">
+        <span class="audience-icon"><Icon name="wrench" /></span>
+        <div>
+          <span class="eyebrow" style="margin:0">Getting started</span>
+          <h2>How it works for technicians</h2>
+        </div>
+      </div>
+      <ol class="flow">
+        {TECH_STEPS.map((s, i) => (
+          <li class="flow-item reveal">
+            <span class="step-num" aria-hidden="true">0{i + 1}</span>
+            <div class="flow-body">
+              <h3><span class="sr-only">Step {i + 1}: </span>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow"><Icon name="tools" />Skills in demand</span>
+        <h2>Work across IT &amp; low-voltage categories</h2>
+      </div>
+      <ul class="chip-list">
+        {SERVICES.map((s) => <li><a href={u(`/services/${s.slug}/`)}><Icon name={s.icon} />{s.title}</a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Testimonials audience="technician" />
+
+  <section class="section section--soft">
+    <div class="container" style="max-width:820px">
+      <h2>Frequently asked questions</h2>
+      <div class="faq">
+        {faqs.map((f, i) => (
+          <details open={i === 0}>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" aria-label="Join DeployFleet">
+    <div class="container cta-inner">
+      <div>
+        <h2>Ready for better jobs?</h2>
+        <p>Create your profile, set your service area, and start getting matched.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn--white" href={appLinks.register}>Join as a Technician <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+</Base>

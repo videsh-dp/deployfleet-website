@@ -2,7 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import PageHero from '../components/PageHero.astro';
-import { SITE, appLinks } from '../data/site';
+import { u } from '../lib/url';
+import { SITE, INTEGRATIONS, appLinks } from '../data/site';
+const endpoint = INTEGRATIONS.formspreeId ? `https://formspree.io/f/${INTEGRATIONS.formspreeId}` : '';
 
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/contact/' }];
 ---
@@ -24,10 +26,12 @@ const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/conta
             <span class="call-icon"><Icon name="mail" /></span>
             <div><h3>Email</h3><a href={`mailto:${SITE.email}`}>{SITE.email}</a></div>
           </div>
-          <div class="contact-card">
-            <span class="call-icon"><Icon name="phone" /></span>
-            <div><h3>Phone</h3><a href={SITE.phoneHref}>{SITE.phone}</a></div>
-          </div>
+          {SITE.phone && (
+            <div class="contact-card">
+              <span class="call-icon"><Icon name="phone" /></span>
+              <div><h3>Phone</h3><a href={SITE.phoneHref}>{SITE.phone}</a></div>
+            </div>
+          )}
           <div class="contact-card">
             <span class="call-icon"><Icon name="clock" /></span>
             <div><h3>Dispatch hours</h3><p>On-demand, including after-hours and weekends.</p></div>
@@ -35,7 +39,8 @@ const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/conta
         </div>
       </div>
 
-      <form class="form" data-contact-form data-to={SITE.email} novalidate>
+      <form class="form" data-contact-form data-to={SITE.email} data-endpoint={endpoint} action={endpoint || undefined} method="POST" novalidate>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
         <fieldset style="border:0;padding:0;margin:0">
           <legend class="field" style="font-size:.85rem;color:var(--ink);font-weight:600;padding:0;margin-bottom:7px">I am a</legend>
           <div class="segmented">
@@ -65,7 +70,9 @@ const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/conta
         </div>
         <div class="field"><label for="message">Message</label><textarea id="message" name="message" required></textarea></div>
         <button class="btn btn--primary btn--block" type="submit">Send message <Icon name="arrow" /></button>
-        <p class="form-success" role="status">Thanks! Your email app should open with your message ready to send.</p>
+        <p class="form-note">By sending this form you agree to our <a href={u('/privacy/')} style="color:var(--purple)">Privacy Policy</a>.</p>
+        <p class="form-success" role="status" data-success>{endpoint ? 'Thanks! Your message was sent. We’ll get back to you shortly.' : 'Thanks! Your email app should open with your message ready to send.'}</p>
+        <p class="form-error" role="alert">Sorry, something went wrong. Please email us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
       </form>
     </div>
   </section>

@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { appLinks } from '../data/site';
+import { u } from '../lib/url';
 interface Props { title?: string; text?: string }
 const { title = 'Need coverage today?', text = 'Post a Job and dispatch the right tech fast.' } = Astro.props;
 ---
@@ -12,7 +13,7 @@ const { title = 'Need coverage today?', text = 'Post a Job and dispatch the righ
     </div>
     <div class="cta-actions">
       <a class="btn btn--white" href={appLinks.register}>Post a Job <Icon name="arrow" /></a>
-      <a class="btn btn--outline" href={appLinks.register}>Join as a Technician</a>
+      <a class="btn btn--outline" href={u('/technicians/')}>Join as a Technician</a>
     </div>
   </div>
 </section>

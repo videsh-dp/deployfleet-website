@@ -1,0 +1,26 @@
+---
+// Renders only when TESTIMONIALS (src/data/site.ts) has entries. Use real, attributable quotes only.
+import Icon from './Icon.astro';
+import { TESTIMONIALS } from '../data/site';
+interface Props { audience?: 'provider' | 'technician' }
+const { audience } = Astro.props;
+const items = audience ? TESTIMONIALS.filter((t) => t.audience === audience) : TESTIMONIALS;
+---
+{items.length > 0 && (
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow"><Icon name="tools" />Testimonials</span>
+        <h2>What people say about DeployFleet</h2>
+      </div>
+      <div class="card-grid">
+        {items.slice(0, 3).map((t) => (
+          <figure class="quote reveal">
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption><strong>{t.name}</strong><span>{t.role}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

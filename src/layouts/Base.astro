@@ -4,7 +4,8 @@ import '../styles/global.css';
 import fontRegular from '../assets/fonts/EuclidCircularB-Regular.ttf?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE } from '../data/site';
+import { SITE, INTEGRATIONS, appLinks } from '../data/site';
+const gaId = INTEGRATIONS.gaId;
 
 interface Props {
   title: string;
@@ -56,6 +57,7 @@ const allSchema = [orgSchema, websiteSchema, ...(breadcrumbSchema ? [breadcrumbS
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
@@ -80,6 +82,19 @@ const allSchema = [orgSchema, websiteSchema, ...(breadcrumbSchema ? [breadcrumbS
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
+
     {allSchema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
   <body>
@@ -89,6 +104,10 @@ const allSchema = [orgSchema, websiteSchema, ...(breadcrumbSchema ? [breadcrumbS
       <slot />
     </main>
     <Footer />
+    <div class="mobile-cta" data-mobile-cta>
+      <a class="btn btn--primary" href={appLinks.register}>Post a Job</a>
+      <a class="btn btn--ghost" href={u('/technicians/')}>Join as a Tech</a>
+    </div>
     <script>
       import '../scripts/main.ts';
     </script>
