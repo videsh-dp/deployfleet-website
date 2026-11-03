@@ -1,6 +1,11 @@
 // Header shadow on scroll
 const header = document.querySelector<HTMLElement>('[data-header]');
-const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+const mobileCta = document.querySelector<HTMLElement>('[data-mobile-cta]');
+const onScroll = () => {
+  header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  // Show the sticky mobile CTA once the visitor has scrolled past the first screen.
+  mobileCta?.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.6);
+};
 onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 

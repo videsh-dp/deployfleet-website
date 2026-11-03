@@ -8,7 +8,7 @@ import StepsTabs from '../components/StepsTabs.astro';
 import Features from '../components/Features.astro';
 import CtaBand from '../components/CtaBand.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
-import { SITE, HELPS, appLinks } from '../data/site';
+import { SITE, HELPS, VIDEOS, appLinks } from '../data/site';
 import { SERVICES } from '../data/services';
 
 // PLACEHOLDER stats from the mockup. Replace with real numbers before launch.
@@ -139,19 +139,18 @@ const featured = SERVICES.slice(0, 6);
 
   <!-- Video + How it helps -->
   <section class="section section--soft">
-    <div class="container video-split">
+    <div class:list={['container', 'video-split', { 'video-split--solo': !VIDEOS.home.youtubeId }]}>
       <div class="reveal">
         <span class="eyebrow"><Icon name="tools" />How it helps</span>
         <h2>Speed with accountability</h2>
         <p class="lead">Keep locations running smoothly with technicians you can trust and documentation you can verify.</p>
-        <ul class="helps" style="grid-template-columns:1fr">
+        <ul class:list={['helps', { 'helps--stack': VIDEOS.home.youtubeId }]}>
           {HELPS.map((h) => <li><span class="tick"><Icon name="check" /></span>{h}</li>)}
         </ul>
       </div>
-      <div class="reveal">
-        <!-- Add youtubeId + uploadDate when the video is ready -->
-        <VideoEmbed title="DeployFleet in 90 seconds" description="See how providers post, match, track, close out and pay for field service jobs on DeployFleet." />
-      </div>
+      {VIDEOS.home.youtubeId && (
+        <div class="reveal"><VideoEmbed {...VIDEOS.home} /></div>
+      )}
     </div>
   </section>
 

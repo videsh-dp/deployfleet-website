@@ -19,6 +19,23 @@ export const SITE = {
   social: [] as { label: string; href: string }[],
 };
 
+// Videos: paste a YouTube ID (and the upload date, YYYY-MM-DD) to show a video.
+// Sections show no video placeholder while youtubeId is empty.
+export const VIDEOS = {
+  home: {
+    youtubeId: '',
+    uploadDate: '',
+    title: 'DeployFleet in 90 seconds',
+    description: 'See how providers post, match, track, close out and pay for field service jobs on DeployFleet.',
+  },
+  howItWorks: {
+    youtubeId: '',
+    uploadDate: '',
+    title: 'How DeployFleet works',
+    description: 'A walkthrough of posting, matching, tracking and closing out a field service job on DeployFleet.',
+  },
+};
+
 export const appLinks = {
   register: `${SITE.appUrl}/register`,
   login: `${SITE.appUrl}/login`,
