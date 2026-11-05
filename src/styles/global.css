@@ -624,3 +624,32 @@ a.brand-slot { width: 100%; }
   .dropdown a:hover { background: rgba(255,255,255,.06); color: #fff; }
   .nav-mobile-ctas .btn--ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.35); }
 }
+
+/* ---------- Mobile QA fixes (small phones, long words) ---------- */
+body { overflow-wrap: break-word; }
+.split > *, .video-split > *, .detail-grid > *, .contact-grid > *, .section-head > *, .hero-inner > * { min-width: 0; }
+.contact-card a, .footer-links a, .legal a { overflow-wrap: anywhere; }
+.btn--block { white-space: normal; text-align: center; }
+.logo { padding: 10px 0; }
+.footer-bottom nav { flex-wrap: wrap; gap: 4px 20px; }
+@media (max-width: 400px) {
+  .btn { white-space: normal; text-align: center; padding-left: 18px; padding-right: 18px; }
+  .hero-ctas .btn { flex: 1 1 100%; }
+  .cta-actions .btn { flex: 1 1 100%; }
+  .logo-text { font-size: 1.25rem; }
+  .logo img { width: 34px; }
+  .mobile-cta .btn { padding: 10px 8px; font-size: .9rem; }
+}
+@media (max-width: 340px) { .segmented { grid-template-columns: 1fr; } }
+.segmented > * { min-width: 0; }
+
+/* iPhone notch / home indicator (viewport-fit=cover) */
+.container {
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+@media (max-width: 960px) {
+  .nav { padding-bottom: calc(32px + env(safe-area-inset-bottom)); overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+}
+a, button, summary, label { -webkit-tap-highlight-color: rgba(84, 66, 245, .15); }
+@media (max-width: 360px) { .contact-card { flex-direction: column; gap: 12px; } }
