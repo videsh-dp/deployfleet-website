@@ -31,7 +31,7 @@ jobs:
           SITE_URL: https://${{ github.repository_owner }}.github.io
           BASE_PATH: /${{ github.event.repository.name }}
           # Optional integrations, set under Settings → Secrets and variables → Actions → Variables
-          PUBLIC_FORMSPREE_ID: ${{ vars.FORMSPREE_ID }}
+          PUBLIC_CONTACT_ENDPOINT: ${{ vars.CONTACT_ENDPOINT }}
           PUBLIC_GA_ID: ${{ vars.GA_MEASUREMENT_ID }}
       - uses: actions/upload-pages-artifact@v3
         with:

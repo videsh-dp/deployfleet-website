@@ -53,8 +53,9 @@ export const TESTIMONIALS: { quote: string; name: string; role: string; audience
 
 // Third-party services, configured with GitHub repo variables (Settings → Secrets and variables → Actions → Variables).
 export const INTEGRATIONS = {
-  // Formspree form ID (the part after /f/ in your form endpoint). Empty = form opens the visitor's email app.
-  formspreeId: import.meta.env.PUBLIC_FORMSPREE_ID ?? '',
+  // Contact form endpoint on the DeployFleet API (emails the team via Resend).
+  // Override with the CONTACT_ENDPOINT repo variable, e.g. for a staging API.
+  contactEndpoint: import.meta.env.PUBLIC_CONTACT_ENDPOINT || 'https://www.deployfleet.com/api/public/contact',
   // Google Analytics 4 measurement ID (G-XXXXXXX). Empty = no analytics.
   gaId: import.meta.env.PUBLIC_GA_ID ?? '',
 };

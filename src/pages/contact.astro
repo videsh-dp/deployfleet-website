@@ -4,7 +4,7 @@ import Icon from '../components/Icon.astro';
 import PageHero from '../components/PageHero.astro';
 import { u } from '../lib/url';
 import { SITE, INTEGRATIONS, appLinks } from '../data/site';
-const endpoint = INTEGRATIONS.formspreeId ? `https://formspree.io/f/${INTEGRATIONS.formspreeId}` : '';
+const endpoint = INTEGRATIONS.contactEndpoint;
 
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/contact/' }];
 ---
@@ -39,7 +39,7 @@ const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/conta
         </div>
       </div>
 
-      <form class="form" data-contact-form data-to={SITE.email} data-endpoint={endpoint} action={endpoint || undefined} method="POST" novalidate>
+      <form class="form" data-contact-form data-to={SITE.email} data-endpoint={endpoint} method="POST" novalidate>
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
         <fieldset style="border:0;padding:0;margin:0">
           <legend class="field" style="font-size:.85rem;color:var(--ink);font-weight:600;padding:0;margin-bottom:7px">I am a</legend>
@@ -72,7 +72,7 @@ const crumbs = [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/conta
         <button class="btn btn--primary btn--block" type="submit">Send message <Icon name="arrow" /></button>
         <p class="form-note">By sending this form you agree to our <a href={u('/privacy/')} style="color:var(--purple)">Privacy Policy</a>.</p>
         <p class="form-success" role="status" data-success>{endpoint ? 'Thanks! Your message was sent. We’ll get back to you shortly.' : 'Thanks! Your email app should open with your message ready to send.'}</p>
-        <p class="form-error" role="alert">Sorry, something went wrong. Please email us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+        <p class="form-error" role="alert"><span data-error-text>Sorry, something went wrong.</span> Please email us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
       </form>
     </div>
   </section>

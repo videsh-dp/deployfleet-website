@@ -105,7 +105,8 @@ if ('IntersectionObserver' in window) {
   reveals.forEach((el) => el.classList.add('is-visible'));
 }
 
-// Contact form: posts to Formspree when configured, otherwise hands off to the visitor's email app.
+// Contact form: posts JSON to the DeployFleet API (which emails the team via Resend).
+// With no endpoint configured it hands off to the visitor's email app instead.
 const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
 form?.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -116,10 +117,22 @@ form?.addEventListener('submit', async (e) => {
   if (endpoint) {
     const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     if (btn) btn.disabled = true;
+    const errorText = form.querySelector<HTMLElement>('[data-error-text]');
+    if (errorText) errorText.textContent = 'Sorry, something went wrong.';
     try {
-      d.set('_subject', `[Website] ${d.get('role')} inquiry from ${d.get('name')}`);
-      const res = await fetch(endpoint, { method: 'POST', body: d, headers: { Accept: 'application/json' } });
-      if (!res.ok) throw new Error(String(res.status));
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(d)),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      });
+      if (!res.ok) {
+        // 400 (validation) and 429 (rate limit) carry a message meant for the visitor.
+        const data = await res.json().catch(() => null);
+        if (errorText && (res.status === 400 || res.status === 429) && data?.message) {
+          errorText.textContent = res.status === 400 ? `Please check the form: ${String(data.message).replace(/"/g, '')}.` : String(data.message);
+        }
+        throw new Error(String(res.status));
+      }
       form.reset();
       form.classList.add('is-sent');
       (window as any).gtag?.('event', 'generate_lead', { form: 'contact' });
