@@ -31,8 +31,10 @@ In `src/data/site.ts`:
 
 ### Contact form and analytics
 
-Set these as GitHub repo **variables** (Settings → Secrets and variables → Actions → Variables); the deploy workflow passes them to the build:
-- `FORMSPREE_ID`: the ID from your Formspree form endpoint (`https://formspree.io/f/<ID>`). Without it, the form opens the visitor's email app.
+The contact form posts JSON to the DeployFleet API at `https://www.deployfleet.com/api/public/contact` (Express server in `videsh-dp/deployfleet`, `apps/server`), which validates it, rate limits it, and emails the team through Resend with reply-to set to the visitor. If the request fails, the form shows an error with the support email address.
+
+Optional GitHub repo **variables** (Settings → Secrets and variables → Actions → Variables); the deploy workflow passes them to the build:
+- `CONTACT_ENDPOINT`: a different form endpoint, e.g. a staging API. The API's CORS list must include the site's origin.
 - `GA_MEASUREMENT_ID`: Google Analytics 4 ID (`G-…`). Without it, no analytics script loads. Form submissions send a `generate_lead` event.
 
 Re-run the "Deploy to GitHub Pages" workflow after changing a variable.
