@@ -546,6 +546,7 @@ strong { color: var(--ink); font-weight: 600; }
 .video-split--solo { grid-template-columns: 1fr; }
 .video-split--solo .prose { max-width: 820px; }
 .helps--stack { grid-template-columns: 1fr; }
+.audience-video { margin: 0 0 40px; }
 
 /* Mobile sticky CTA */
 .mobile-cta { display: none; }
