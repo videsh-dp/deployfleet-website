@@ -35,7 +35,8 @@ The contact form posts JSON to the DeployFleet API at `https://www.deployfleet.c
 
 Optional GitHub repo **variables** (Settings → Secrets and variables → Actions → Variables); the deploy workflow passes them to the build:
 - `CONTACT_ENDPOINT`: a different form endpoint, e.g. a staging API. The API's CORS list must include the site's origin.
-- `GA_MEASUREMENT_ID`: Google Analytics 4 ID (`G-…`). Without it, no analytics script loads. Form submissions send a `generate_lead` event.
+- `POSTHOG_KEY`: PostHog project API key (`phc_…`, the same project as the app). Without it, no analytics loads. Page views, page leaves and clicks are captured automatically; contact form sends `contact_form_submitted`. All events carry `site: marketing`.
+- `POSTHOG_HOST`: only if the project is not on PostHog US cloud, e.g. `https://eu.i.posthog.com`.
 
 Re-run the "Deploy to GitHub Pages" workflow after changing a variable.
 

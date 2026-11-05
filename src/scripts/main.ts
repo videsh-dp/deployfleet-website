@@ -1,3 +1,28 @@
+// Analytics: PostHog loads after the page is interactive, only when a project key is configured.
+type Props = Record<string, unknown>;
+let posthog: { capture: (event: string, props?: Props) => void } | null = null;
+const queued: [string, Props?][] = [];
+export const track = (event: string, props?: Props) => {
+  if (posthog) posthog.capture(event, props);
+  else queued.push([event, props]);
+};
+const phConfig = document.querySelector<HTMLMetaElement>('meta[name="ph-config"]');
+if (phConfig?.dataset.key) {
+  import('posthog-js').then(({ default: ph }) => {
+    ph.init(phConfig.dataset.key!, {
+      api_host: phConfig.dataset.host,
+      person_profiles: 'identified_only',
+      capture_pageview: true,
+      capture_pageleave: true,
+      autocapture: true, // clicks on CTAs, nav, video play buttons, form submits
+      session_recording: { maskAllInputs: true },
+      loaded: (p) => p.register({ site: 'marketing' }),
+    });
+    posthog = ph;
+    queued.splice(0).forEach(([e, p]) => ph.capture(e, p));
+  }).catch(() => { /* analytics must never break the site */ });
+}
+
 // Header shadow on scroll
 const header = document.querySelector<HTMLElement>('[data-header]');
 const mobileCta = document.querySelector<HTMLElement>('[data-mobile-cta]');
@@ -135,7 +160,7 @@ form?.addEventListener('submit', async (e) => {
       }
       form.reset();
       form.classList.add('is-sent');
-      (window as any).gtag?.('event', 'generate_lead', { form: 'contact' });
+      track('contact_form_submitted', { role: d.get('role'), topic: d.get('topic') });
     } catch {
       form.classList.add('has-error');
     } finally {
