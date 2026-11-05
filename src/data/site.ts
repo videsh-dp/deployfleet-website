@@ -58,8 +58,9 @@ export const INTEGRATIONS = {
   // Contact form endpoint on the DeployFleet API (emails the team via Resend).
   // Override with the CONTACT_ENDPOINT repo variable, e.g. for a staging API.
   contactEndpoint: import.meta.env.PUBLIC_CONTACT_ENDPOINT || 'https://www.deployfleet.com/api/public/contact',
-  // Google Analytics 4 measurement ID (G-XXXXXXX). Empty = no analytics.
-  gaId: import.meta.env.PUBLIC_GA_ID ?? '',
+  // PostHog project API key (public by design; same project as the app). POSTHOG_KEY repo variable overrides it.
+  posthogKey: import.meta.env.PUBLIC_POSTHOG_KEY || 'phc_rhE9xsitTFNbcVo7ppTRjXTGCWgVmCQ5BCGtccjQvSkL',
+  posthogHost: import.meta.env.PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
 };
 
 export const appLinks = {
