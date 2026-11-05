@@ -4,7 +4,8 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import PageHero from '../components/PageHero.astro';
 import Testimonials from '../components/Testimonials.astro';
-import { TECH_STEPS, appLinks } from '../data/site';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import { TECH_STEPS, VIDEOS, appLinks } from '../data/site';
 import { SERVICES } from '../data/services';
 
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'Become a Technician', path: '/technicians/' }];
@@ -57,7 +58,21 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section section--soft" id="how" style="scroll-margin-top:var(--header-h)">
+  {VIDEOS.technician.youtubeId && (
+    <section class="section section--soft">
+      <div class="container video-split">
+        <div class="reveal">
+          <span class="eyebrow"><Icon name="play" />Watch</span>
+          <h2>See DeployFleet from the technician side</h2>
+          <p class="lead">A quick look at how you find jobs, get matched, complete the work and get paid.</p>
+          <a class="btn btn--primary" href={appLinks.register}>Create your profile <Icon name="arrow" /></a>
+        </div>
+        <div class="reveal"><VideoEmbed {...VIDEOS.technician} /></div>
+      </div>
+    </section>
+  )}
+
+  <section class="section" id="how" style="scroll-margin-top:var(--header-h)">
     <div class="container" style="max-width:900px">
       <div class="audience-head">
         <span class="audience-icon"><Icon name="wrench" /></span>
@@ -80,7 +95,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section--soft">
     <div class="container">
       <div class="section-head section-head--center">
         <span class="eyebrow"><Icon name="tools" />Skills in demand</span>
@@ -94,7 +109,7 @@ const faqs = [
 
   <Testimonials audience="technician" />
 
-  <section class="section section--soft">
+  <section class="section">
     <div class="container" style="max-width:820px">
       <h2>Frequently asked questions</h2>
       <div class="faq">

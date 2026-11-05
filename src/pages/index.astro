@@ -166,17 +166,17 @@ const featured = SERVICES.slice(0, 6);
 
   <!-- Video + How it helps -->
   <section class="section section--soft">
-    <div class:list={['container', 'video-split', { 'video-split--solo': !VIDEOS.home.youtubeId }]}>
+    <div class:list={['container', 'video-split', { 'video-split--solo': !VIDEOS.company.youtubeId }]}>
       <div class="reveal">
         <span class="eyebrow"><Icon name="tools" />How it helps</span>
         <h2>Speed with accountability</h2>
         <p class="lead">Keep locations running smoothly with technicians you can trust and documentation you can verify.</p>
-        <ul class:list={['helps', { 'helps--stack': VIDEOS.home.youtubeId }]}>
+        <ul class:list={['helps', { 'helps--stack': VIDEOS.company.youtubeId }]}>
           {HELPS.map((h) => <li><span class="tick"><Icon name="check" /></span>{h}</li>)}
         </ul>
       </div>
-      {VIDEOS.home.youtubeId && (
-        <div class="reveal"><VideoEmbed {...VIDEOS.home} /></div>
+      {VIDEOS.company.youtubeId && (
+        <div class="reveal"><VideoEmbed {...VIDEOS.company} /></div>
       )}
     </div>
   </section>

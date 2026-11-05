@@ -9,8 +9,8 @@ import { SITE, PROVIDER_STEPS, TECH_STEPS, VIDEOS, appLinks } from '../data/site
 
 const crumbs = [{ name: 'Home', path: '/' }, { name: 'How It Works', path: '/how-it-works/' }];
 const groups = [
-  { id: 'providers', icon: 'building', eyebrow: 'Companies / Dispatch Teams', title: 'For Providers', steps: PROVIDER_STEPS, cta: 'Post a Job', soft: false },
-  { id: 'technicians', icon: 'wrench', eyebrow: 'Field Techs / Installers', title: 'For Technicians', steps: TECH_STEPS, cta: 'Join as a Technician', soft: true },
+  { id: 'providers', icon: 'building', eyebrow: 'Companies / Dispatch Teams', title: 'For Providers', steps: PROVIDER_STEPS, cta: 'Post a Job', soft: false, video: VIDEOS.company },
+  { id: 'technicians', icon: 'wrench', eyebrow: 'Field Techs / Installers', title: 'For Technicians', steps: TECH_STEPS, cta: 'Join as a Technician', soft: true, video: VIDEOS.technician },
 ];
 const howTo = groups.map((g) => ({
   '@context': 'https://schema.org',
@@ -33,16 +33,13 @@ const howTo = groups.map((g) => ({
   </PageHero>
 
   <section class="section">
-    <div class:list={['container', 'video-split', { 'video-split--solo': !VIDEOS.howItWorks.youtubeId }]}>
+    <div class="container video-split video-split--solo">
       <div class="prose reveal">
         <span class="eyebrow"><Icon name="tools" />Overview</span>
         <h2>Dispatch without the chaos</h2>
         <p class="lead">DeployFleet makes it simple to post, dispatch, complete, and close out field service jobs, whether you’re a company that needs coverage or a technician looking for quality work.</p>
         <p>The platform is built to remove the biggest problems in dispatch: chasing technicians, unclear scopes, inconsistent closeouts, and slow updates.</p>
       </div>
-      {VIDEOS.howItWorks.youtubeId && (
-        <div class="reveal"><VideoEmbed {...VIDEOS.howItWorks} /></div>
-      )}
     </div>
   </section>
 
@@ -56,6 +53,7 @@ const howTo = groups.map((g) => ({
             <h2>{g.title}</h2>
           </div>
         </div>
+        {g.video.youtubeId && <div class="reveal audience-video"><VideoEmbed {...g.video} /></div>}
         <ol class="flow">
           {g.steps.map((s, i) => (
             <li class="flow-item reveal">

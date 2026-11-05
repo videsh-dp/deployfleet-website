@@ -23,17 +23,19 @@ export const SITE = {
 // Videos: paste a YouTube ID (and the upload date, YYYY-MM-DD) to show a video.
 // Sections show no video placeholder while youtubeId is empty.
 export const VIDEOS = {
-  home: {
-    youtubeId: '',
+  // Home ("How it helps"), How It Works (providers section)
+  company: {
+    youtubeId: 'WiEtFAP5bno',
     uploadDate: '',
-    title: 'DeployFleet in 90 seconds',
-    description: 'See how providers post, match, track, close out and pay for field service jobs on DeployFleet.',
+    title: 'DeployFleet for companies',
+    description: 'See how companies post, match, track, close out and pay for field service jobs on DeployFleet.',
   },
-  howItWorks: {
-    youtubeId: '',
+  // Technicians page, How It Works (technicians section)
+  technician: {
+    youtubeId: 'd6Op6CRFd3o',
     uploadDate: '',
-    title: 'How DeployFleet works',
-    description: 'A walkthrough of posting, matching, tracking and closing out a field service job on DeployFleet.',
+    title: 'DeployFleet for technicians',
+    description: 'See how field technicians find jobs, get matched, complete work and get paid on DeployFleet.',
   },
 };
 
