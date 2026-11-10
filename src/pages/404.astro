@@ -3,6 +3,12 @@ import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 ---
+<script is:inline>
+  // Old links (emails, bookmarks, Stripe) from when the web app lived on this domain. Keeps the hash: password-reset links carry their code there.
+  if (/^\/(login|register|forgot-password|reset-password|negotiate-payment|verify|payment|stripe|company|technician|dp-admin)(\/|$)/.test(location.pathname)) {
+    location.replace('https://app.deployfleet.com' + location.pathname + location.search + location.hash);
+  }
+</script>
 <Base title="Page not found" description="The page you’re looking for doesn’t exist." noindex>
   <section class="page-hero" style="min-height:60vh;display:flex;align-items:center">
     <div class="container">

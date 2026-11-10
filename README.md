@@ -31,7 +31,7 @@ In `src/data/site.ts`:
 
 ### Contact form and analytics
 
-The contact form posts JSON to the DeployFleet API at `https://www.deployfleet.com/api/public/contact` (Express server in `videsh-dp/deployfleet`, `apps/server`), which validates it, rate limits it, and emails the team through Resend with reply-to set to the visitor. If the request fails, the form shows an error with the support email address.
+The contact form posts JSON to the DeployFleet API at `https://app.deployfleet.com/api/public/contact` (Express server in `videsh-dp/deployfleet`, `apps/server`), which validates it, rate limits it, and emails the team through Resend with reply-to set to the visitor. If the request fails, the form shows an error with the support email address.
 
 Optional GitHub repo **variables** (Settings → Secrets and variables → Actions → Variables); the deploy workflow passes them to the build:
 - `CONTACT_ENDPOINT`: a different form endpoint, e.g. a staging API. The API's CORS list must include the site's origin.
@@ -84,7 +84,7 @@ Set `SITE_URL` (domain, default `https://www.deployfleet.com`) and `BASE_PATH` (
 
 ## Deploy
 
-**GitHub Pages (current):** `.github/workflows/deploy-pages.yml` builds and deploys on every push to `main`, at `https://<owner>.github.io/<repo>/`. One-time setup: repo Settings → Pages → Source: **GitHub Actions**. (Pages on a private repo needs a paid GitHub plan; otherwise make the repo public.)
+**GitHub Pages (current):** `.github/workflows/deploy-pages.yml` builds and deploys on every push to `main`, at `https://www.deployfleet.com` (custom domain set in repo Settings → Pages; the apex redirects to www). One-time setup: repo Settings → Pages → Source: **GitHub Actions**. (Pages on a private repo needs a paid GitHub plan; otherwise make the repo public.)
 
 **Elsewhere:** 
 `dist/` is a plain static folder: deploy to Firebase Hosting, Netlify, Vercel, Cloudflare Pages, or S3. Note: if this site takes over `deployfleet.com`, the web app needs its own host (e.g. `app.deployfleet.com`) and `appUrl` in `src/data/site.ts` should point there.
