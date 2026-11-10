@@ -35,7 +35,7 @@ const schema = [
 <Base title={s.metaTitle} description={s.metaDescription} breadcrumbs={crumbs} schema={schema}>
   <PageHero eyebrow="Service" title={s.title} text={s.short} crumbs={crumbs}>
     <div class="hero-ctas" style="margin-top:28px">
-      <a class="btn btn--primary" href={appLinks.register}>Post a Job <Icon name="arrow" /></a>
+      <a class="btn btn--primary" href={appLinks.registerCompany}>Post a Job <Icon name="arrow" /></a>
       <a class="btn btn--outline" href={u('/contact/')}>Talk to us</a>
     </div>
   </PageHero>
@@ -78,7 +78,7 @@ const schema = [
         <ul>
           {s.closeout.map((c) => <li><Icon name="check" />{c}</li>)}
         </ul>
-        <a class="btn btn--primary btn--block" href={appLinks.register}>Post a {s.title} job</a>
+        <a class="btn btn--primary btn--block" href={appLinks.registerCompany}>Post a {s.title} job</a>
         <p style="margin:16px 0 0;font-size:.85rem">Urgent? Technicians set after-hours and weekend availability so you can dispatch now.</p>
       </aside>
     </div>

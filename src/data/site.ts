@@ -65,6 +65,9 @@ export const INTEGRATIONS = {
 
 export const appLinks = {
   register: `${SITE.appUrl}/register`,
+  // The app opens the matching sign-up tab from ?role= (Technician is its default).
+  registerCompany: `${SITE.appUrl}/register?role=company`,
+  registerTechnician: `${SITE.appUrl}/register?role=technician`,
   login: `${SITE.appUrl}/login`,
 };
 

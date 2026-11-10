@@ -66,7 +66,7 @@ const howTo = groups.map((g) => ({
           ))}
         </ol>
         <div class="section-foot" style="justify-content:flex-start;padding-left:74px">
-          <a class="btn btn--primary" href={appLinks.register}>{g.cta} <Icon name="arrow" /></a>
+          <a class="btn btn--primary" href={g.id === 'providers' ? appLinks.registerCompany : appLinks.registerTechnician}>{g.cta} <Icon name="arrow" /></a>
         </div>
       </div>
     </section>
